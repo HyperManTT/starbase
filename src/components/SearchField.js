@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import AlbumListItem from "./AlbumListItem";
-import ArtistListItem from "./ArtistListItem";
+import SongListItem from "./SongListItem";
 
 class SearchField extends Component {
   constructor(props) {
@@ -13,7 +12,7 @@ class SearchField extends Component {
     this.setState({ searchTerm: event.target.value });
     if (event.target.value !== "") {
       this.music.api
-        .search(event.target.value, { limit: 20, types: "artists,albums" })
+        .search(event.target.value, { limit: 20, types: "songs" })
         .then(results => {
           this.setState({ results: results });
         });
@@ -22,33 +21,27 @@ class SearchField extends Component {
     }
   };
 
+  selectSong = song => {
+    this.music.setQueue({ song: song.id }).then(queue => {
+      this.music.play();
+    });
+  };
+
   render() {
     return (
       <div>
         <input type="text" name="SearchTerm" onChange={this.handleUpdate} />
-        {this.state.results.artists !== undefined ? (
+        {this.state.results.songs !== undefined ? (
           <div>
-            <h2>Artists</h2>
+            <h2>Songs</h2>
             <ul>
-              {this.state.results.artists.data.map(artistData => (
-                <ArtistListItem artistData={artistData} />
+              {this.state.results.songs.data.map(songData => (
+                <SongListItem songData={songData} onSelect={this.selectSong} />
               ))}
             </ul>
           </div>
         ) : (
-          <div>No Artists</div>
-        )}
-        {this.state.results.albums !== undefined ? (
-          <div>
-            <h2>Albums</h2>
-            <ul>
-              {this.state.results.albums.data.map(albumData => (
-                <AlbumListItem albumData={albumData} />
-              ))}
-            </ul>
-          </div>
-        ) : (
-          <div>No Albums</div>
+          <div>No Songs</div>
         )}
       </div>
     );
