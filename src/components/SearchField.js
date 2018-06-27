@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import AlbumListItem from "./AlbumListItem";
+import ArtistListItem from "./ArtistListItem";
 
 class SearchField extends Component {
   constructor(props) {
@@ -28,8 +30,8 @@ class SearchField extends Component {
           <div>
             <h2>Artists</h2>
             <ul>
-              {this.state.results.artists.data.map(result => (
-                <li key={result.id}>{result.attributes.name}</li>
+              {this.state.results.artists.data.map(artistData => (
+                <ArtistListItem artistData={artistData} />
               ))}
             </ul>
           </div>
@@ -40,16 +42,8 @@ class SearchField extends Component {
           <div>
             <h2>Albums</h2>
             <ul>
-              {this.state.results.albums.data.map(result => (
-                <li key={result.id}>
-                  <img
-                    alt="Album Art"
-                    src={result.attributes.artwork.url
-                      .replace("{w}", "300")
-                      .replace("{h}", "300")}
-                    height="64"
-                  />
-                </li>
+              {this.state.results.albums.data.map(albumData => (
+                <AlbumListItem albumData={albumData} />
               ))}
             </ul>
           </div>
