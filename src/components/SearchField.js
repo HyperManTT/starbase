@@ -36,7 +36,11 @@ class SearchField extends Component {
             <h2>Songs</h2>
             <ul>
               {this.state.results.songs.data.map(songData => (
-                <SongListItem songData={songData} onSelect={this.selectSong} />
+                <SongListItem
+                  key={songData.id}
+                  songData={songData}
+                  onSelect={this.selectSong}
+                />
               ))}
             </ul>
           </div>

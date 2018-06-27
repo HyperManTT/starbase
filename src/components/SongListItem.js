@@ -1,7 +1,7 @@
 import React from "react";
 
 const SongListItem = ({ songData, onSelect }) => (
-  <li key={songData.id} onClick={() => onSelect(songData)}>
+  <li onClick={() => onSelect(songData)}>
     <img
       alt={`${songData.attributes.name} art`}
       src={songData.attributes.artwork.url
