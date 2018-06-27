@@ -43,6 +43,7 @@ class SearchField extends Component {
               {this.state.results.albums.data.map(result => (
                 <li key={result.id}>
                   <img
+                    alt="Album Art"
                     src={result.attributes.artwork.url
                       .replace("{w}", "300")
                       .replace("{h}", "300")}
