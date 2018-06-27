@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SongListItem from "./SongListItem";
+import "./SearchField.css";
 
 class SearchField extends Component {
   constructor(props) {
@@ -29,12 +30,12 @@ class SearchField extends Component {
 
   render() {
     return (
-      <div>
+      <div className="SearchField">
         <input type="text" name="SearchTerm" onChange={this.handleUpdate} />
         {this.state.results.songs !== undefined ? (
           <div>
             <h2>Songs</h2>
-            <ul>
+            <ul className="Results">
               {this.state.results.songs.data.map(songData => (
                 <SongListItem
                   key={songData.id}

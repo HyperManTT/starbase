@@ -1,0 +1,13 @@
+.SongListItem {
+  display: flex;
+  flex-direction: row;
+  line-height: 35px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.SongListItem:hover {
+  background-color: #efefef;
+}
+.SongListItem span {
+  margin-left: 10px;
+}
