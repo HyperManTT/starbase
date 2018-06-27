@@ -4,6 +4,7 @@
   line-height: 35px;
   cursor: pointer;
   margin-top: 10px;
+  transition: background-color 0.15s linear;
 }
 .SongListItem:hover {
   background-color: #efefef;
