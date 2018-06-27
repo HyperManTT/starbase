@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SongListItem from "./SongListItem";
 import "./SearchField.css";
+import { inject, observer } from "mobx-react";
 
 class SearchField extends Component {
   constructor(props) {
@@ -24,7 +25,7 @@ class SearchField extends Component {
 
   selectSong = song => {
     this.music.setQueue({ song: song.id }).then(queue => {
-      this.music.play();
+      this.props.playerStore.play();
     });
   };
 
@@ -53,4 +54,4 @@ class SearchField extends Component {
   }
 }
 
-export default SearchField;
+export default inject("playerStore")(observer(SearchField));
