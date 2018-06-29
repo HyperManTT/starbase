@@ -12,20 +12,19 @@ const Player = inject("playerStore")(
       >
         {playerStore.data.isPlaying ? `Pause` : `Play`}
       </button>
-      <button
-        onClick={() =>
-          playerStore.setVolume(playerStore.data.audioNode.volume + 0.1)
+      <input
+        type="range"
+        id="volume"
+        min="0"
+        value={
+          playerStore.data.audioNode !== null
+            ? playerStore.data.audioNode.volume
+            : 1
         }
-      >
-        +
-      </button>
-      <button
-        onClick={() =>
-          playerStore.setVolume(playerStore.data.audioNode.volume - 0.1)
-        }
-      >
-        -
-      </button>
+        max="1.0"
+        step="0.01"
+        onChange={event => playerStore.setVolume(event.target.value)}
+      />
     </div>
   ))
 );
