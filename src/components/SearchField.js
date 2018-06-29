@@ -9,7 +9,7 @@ class SearchField extends Component {
     super(props);
     this.state = { searchTerm: "", results: {} };
     this.music = window.MusicKit.getInstance();
-    this.onChangeDebounced = debounce(this.onChange, 250);
+    this.onChangeDebounced = debounce(this.onChange, 500);
   }
 
   handleChange = event => {
