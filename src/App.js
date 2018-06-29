@@ -11,16 +11,16 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoggedIn: window.MusicKitInstance.isAuthorized
+      isLoggedIn: window.MusicKit.getInstance().isAuthorized
     };
   }
 
   authStateChanged = () => {
-    this.setState({ isLoggedIn: window.MusicKitInstance.isAuthorized });
+    this.setState({ isLoggedIn: window.MusicKit.getInstance().isAuthorized });
   };
 
   signOff = () => {
-    window.MusicKitInstance.unauthorize().then(this.authStateChanged);
+    window.MusicKit.unauthorize().then(this.authStateChanged);
   };
 
   render() {

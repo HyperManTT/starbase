@@ -7,7 +7,7 @@ class SearchField extends Component {
   constructor(props) {
     super(props);
     this.state = { searchTerm: "", results: {} };
-    this.music = window.MusicKitInstance;
+    this.music = window.MusicKit.getInstance();
   }
 
   handleUpdate = event => {

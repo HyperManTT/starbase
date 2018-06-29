@@ -62,23 +62,33 @@ class PlayerStore {
   }
 
   constructor() {
-    window.addEventListener("musickitloaded", () => {
-      console.log("musicKitLoaded");
-      this.musicKit = window.MusicKit.getInstance();
-      this.musicKit.addEventListener(
-        Events.playbackStateDidChange,
-        this.update
-      );
-      this.musicKit.addEventListener(
-        Events.playbackTimeDidChange,
-        this.updateTime
-      );
-      this.musicKit.addEventListener(
-        Events.playbackVolumeDidChange,
-        this.update
-      );
-    });
+    console.log("playerstore");
+    if (window.MusicKit !== undefined) {
+      this.setup();
+    } else {
+      document.addEventListener("musickitloaded", () => {
+        console.log("musicKitLoaded");
+        this.setup();
+      });
+    }
   }
+
+  setup = () => {
+    this.musicKit = window.MusicKit.configure({
+      developerToken:
+        "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVONzQ5NEhGNDcifQ.eyJpYXQiOjE1Mjk2OTUwMTgsImV4cCI6MTU0NTI0NzAxOCwiaXNzIjoiMlVKNUY0TVU1VSJ9.5xv6wLb7VeHt5wttDu7AFhSiqE8849rjMvdlvaKO00qzmzGwkxJJ5rovsCBKZ8ZFV02VKnpLcXTQIe0sQjKilw",
+      app: {
+        name: "Starbase",
+        build: "1978.4.1"
+      }
+    });
+    this.musicKit.addEventListener(Events.playbackStateDidChange, this.update);
+    this.musicKit.addEventListener(
+      Events.playbackTimeDidChange,
+      this.updateTime
+    );
+    this.musicKit.addEventListener(Events.playbackVolumeDidChange, this.update);
+  };
 
   updateTime = () => {
     this.currentPlaybackTime = this.musicKit.player.currentPlaybackTime;
