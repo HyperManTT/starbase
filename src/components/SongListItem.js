@@ -1,14 +1,9 @@
 import React from "react";
 import "./SongListItem.css";
 
-const SongListItem = ({ songData, onSelect }) => (
+const SongListItem = ({ songData, imageURL, onSelect }) => (
   <li className="SongListItem" onClick={() => onSelect(songData)}>
-    <img
-      alt={`${songData.attributes.name} art`}
-      src={songData.attributes.artwork.url
-        .replace("{w}", "35")
-        .replace("{h}", "35")}
-    />
+    <img alt={`${songData.attributes.name} art`} src={imageURL} />
     <span>
       {songData.attributes.name} - {songData.attributes.artistName}
     </span>

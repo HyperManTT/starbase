@@ -37,13 +37,20 @@ class SearchField extends Component {
           <div>
             <h2>Songs</h2>
             <ul className="Results">
-              {this.state.results.songs.data.map(songData => (
-                <SongListItem
-                  key={songData.id}
-                  songData={songData}
-                  onSelect={this.selectSong}
-                />
-              ))}
+              {this.state.results.songs.data.map(songData => {
+                let imageURL = window.MusicKit.formatArtworkURL(
+                  songData.attributes.artwork,
+                  32
+                );
+                return (
+                  <SongListItem
+                    key={songData.id}
+                    songData={songData}
+                    imageURL={imageURL}
+                    onSelect={this.selectSong}
+                  />
+                );
+              })}
             </ul>
           </div>
         ) : (
