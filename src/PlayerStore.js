@@ -39,7 +39,8 @@ class PlayerStore {
     currentPlaybackTime: 0,
     currentPlaybackTimeRemaining: 0,
     currentVolume: 1,
-    isPlaying: false
+    isPlaying: false,
+    audioNode: null
   };
 
   get timeString() {
@@ -87,7 +88,8 @@ class PlayerStore {
       currentPlaybackTimeRemaining: this.musicKit.player
         .currentPlaybackTimeRemaining,
       currentPlaybackVolume: this.musicKit.player.currentPlaybackVolume,
-      isPlaying: this.musicKit.player.isPlaying
+      isPlaying: this.musicKit.player.isPlaying,
+      audioNode: this.musicKit._player
     };
   };
 
@@ -98,6 +100,11 @@ class PlayerStore {
   play = () => {
     this.musicKit.play();
   };
+
+  setVolume = value => {
+    const volumeValue = value < 0 ? 0 : value > 1 ? 1 : value;
+    this.musicKit._player.volume = volumeValue;
+  };
 }
 
 decorate(PlayerStore, {
@@ -107,7 +114,8 @@ decorate(PlayerStore, {
   timeString: computed,
   stop: action,
   play: action,
-  update: action
+  update: action,
+  setVolume: action
 });
 
 export default new PlayerStore();
