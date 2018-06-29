@@ -34,10 +34,11 @@ const Events = {
 class PlayerStore {
   musicKit;
 
+  currentPlaybackTime = 0;
+  currentPlaybackTimeRemaining = 0;
+
   data = {
     currentPlaybackDuration: 0,
-    currentPlaybackTime: 0,
-    currentPlaybackTimeRemaining: 0,
     currentVolume: 1,
     isPlaying: false,
     audioNode: null
@@ -50,9 +51,9 @@ class PlayerStore {
       }
       return num;
     };
-    let currentTime = moment.duration(this.data.currentPlaybackTime, "seconds");
+    let currentTime = moment.duration(this.currentPlaybackTime, "seconds");
     let remainingTime = moment.duration(
-      this.data.currentPlaybackTimeRemaining,
+      this.currentPlaybackTimeRemaining,
       "seconds"
     );
     return `${currentTime.minutes()}:${pad(
@@ -61,32 +62,32 @@ class PlayerStore {
   }
 
   constructor() {
-    window.addEventListener(
-      "musickitloaded",
-      action(() => {
-        this.musicKit = window.MusicKit.getInstance();
-        this.musicKit.addEventListener(
-          Events.playbackStateDidChange,
-          this.update
-        );
-        this.musicKit.addEventListener(
-          Events.playbackTimeDidChange,
-          this.update
-        );
-        this.musicKit.addEventListener(
-          Events.playbackVolumeDidChange,
-          this.update
-        );
-      })
-    );
+    window.addEventListener("musickitloaded", () => {
+      console.log("musicKitLoaded");
+      this.musicKit = window.MusicKit.getInstance();
+      this.musicKit.addEventListener(
+        Events.playbackStateDidChange,
+        this.update
+      );
+      this.musicKit.addEventListener(
+        Events.playbackTimeDidChange,
+        this.updateTime
+      );
+      this.musicKit.addEventListener(
+        Events.playbackVolumeDidChange,
+        this.update
+      );
+    });
   }
+
+  updateTime = () => {
+    this.currentPlaybackTime = this.musicKit.player.currentPlaybackTime;
+    this.currentPlaybackTimeRemaining = this.musicKit.player.currentPlaybackTimeRemaining;
+  };
 
   update = () => {
     this.data = {
       currentPlaybackDuration: this.musicKit.player.currentPlaybackDuration,
-      currentPlaybackTime: this.musicKit.player.currentPlaybackTime,
-      currentPlaybackTimeRemaining: this.musicKit.player
-        .currentPlaybackTimeRemaining,
       currentPlaybackVolume: this.musicKit.player.currentPlaybackVolume,
       isPlaying: this.musicKit.player.isPlaying,
       audioNode: this.musicKit._player
@@ -108,6 +109,8 @@ class PlayerStore {
 }
 
 decorate(PlayerStore, {
+  currentPlaybackTime: observable,
+  currentPlaybackTimeRemaining: observable,
   musicKit: observable,
   initialized: observable,
   data: observable,
@@ -115,6 +118,7 @@ decorate(PlayerStore, {
   stop: action,
   play: action,
   update: action,
+  updateTime: action,
   setVolume: action
 });
 
