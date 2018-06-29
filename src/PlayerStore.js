@@ -62,14 +62,10 @@ class PlayerStore {
   }
 
   constructor() {
-    console.log("playerstore");
     if (window.MusicKit !== undefined) {
       this.setup();
     } else {
-      document.addEventListener("musickitloaded", () => {
-        console.log("musicKitLoaded");
-        this.setup();
-      });
+      document.addEventListener("musickitloaded", this.setup);
     }
   }
 
@@ -78,11 +74,12 @@ class PlayerStore {
       developerToken:
         "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVONzQ5NEhGNDcifQ.eyJpYXQiOjE1Mjk2OTUwMTgsImV4cCI6MTU0NTI0NzAxOCwiaXNzIjoiMlVKNUY0TVU1VSJ9.5xv6wLb7VeHt5wttDu7AFhSiqE8849rjMvdlvaKO00qzmzGwkxJJ5rovsCBKZ8ZFV02VKnpLcXTQIe0sQjKilw",
       app: {
-        name: "Starbase",
-        build: "1978.4.1"
+        name: "Starbase.tokyo",
+        build: "1983.10.14"
       }
     });
     this.musicKit.addEventListener(Events.playbackStateDidChange, this.update);
+    this.musicKit.addEventListener(Events.primaryPlayerDidChange, this.pause);
     this.musicKit.addEventListener(
       Events.playbackTimeDidChange,
       this.updateTime
