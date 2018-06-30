@@ -5,7 +5,9 @@ import AuthorizeButton from "./components/AuthorizeButton";
 import SearchField from "./components/SearchField";
 import Player from "./components/Player";
 import PlayerStore from "./PlayerStore";
+import { autorun } from "mobx";
 import { Provider, observer } from "mobx-react";
+import { delay } from "lodash";
 
 class App extends Component {
   constructor(props) {
@@ -13,6 +15,14 @@ class App extends Component {
     this.state = {
       isLoggedIn: window.MusicKit.getInstance().isAuthorized
     };
+    this.albumArtRef = React.createRef();
+    autorun(() => {
+      if (PlayerStore.currentMediaItem !== null) {
+        this.handleArtChange(
+          PlayerStore.currentMediaItem.attributes.artwork.url
+        );
+      }
+    });
   }
 
   authStateChanged = () => {
@@ -23,21 +33,27 @@ class App extends Component {
     window.MusicKit.unauthorize().then(this.authStateChanged);
   };
 
+  handleArtChange = artURL => {
+    const img = new Image();
+    this.albumArtRef.current.style.opacity = 0;
+    img.onload = () => {
+      delay(() => {
+        this.albumArtRef.current.style.backgroundImage = `url(${artURL})`;
+        this.albumArtRef.current.style.opacity = 1;
+      }, 500);
+    };
+    img.src = artURL;
+  };
+
   render() {
-    let artURL =
-      PlayerStore.currentMediaItem !== null
-        ? PlayerStore.currentMediaItem.attributes.artwork.url
-        : "";
     return (
       <Provider playerStore={PlayerStore}>
         <div className="App">
           <header className="App-header">
             <div
               className="albumArt"
-              style={{
-                backgroundImage: `url(${artURL})`,
-                opacity: PlayerStore.data.isPlaying ? 1 : 0
-              }}
+              ref={this.albumArtRef}
+              style={{ opacity: 0 }}
             />
             <img src={logo} className="App-logo" alt="logo" />
           </header>

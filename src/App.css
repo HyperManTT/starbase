@@ -36,11 +36,11 @@
 }
 .albumArt {
   transition: opacity 0.3s ease-in-out;
-  -webkit-filter: blur(100px);
-  -moz-filter: blur(100px);
-  -o-filter: blur(100px);
-  -ms-filter: blur(100px);
-  filter: blur(100px);
+  -webkit-filter: blur(20px);
+  -moz-filter: blur(20px);
+  -o-filter: blur(20px);
+  -ms-filter: blur(20px);
+  filter: blur(20px);
   background-position: center;
   background-size: cover;
   position: absolute;
