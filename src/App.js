@@ -64,16 +64,18 @@ class App extends Component {
               style={{ opacity: 0 }}
             />
             <div className="albumArt" ref={this.albumArtRef}>
-              {PlayerStore.currentMediaItem !== null ? (
-                <div className="albumInfo" ref={this.albumInfoRef}>
-                  <div className="title">
-                    {PlayerStore.currentMediaItem.attributes.name}
+              <div className="albumInfo" ref={this.albumInfoRef}>
+                {PlayerStore.currentMediaItem !== null ? (
+                  <div>
+                    <div className="title">
+                      {PlayerStore.currentMediaItem.attributes.name}
+                    </div>
+                    <div className="artist">
+                      {PlayerStore.currentMediaItem.attributes.artistName}
+                    </div>
                   </div>
-                  <div className="artist">
-                    {PlayerStore.currentMediaItem.attributes.artistName}
-                  </div>
-                </div>
-              ) : null}
+                ) : null}
+              </div>
             </div>
           </header>
           {this.state.isLoggedIn ? (
