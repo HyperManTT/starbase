@@ -8,6 +8,11 @@ const PlayerTime = inject("playerStore")(
 const Player = ({ playerStore }) => (
   <div>
     <PlayerTime />
+    {playerStore.currentMediaItem !== null ? (
+      <div>{playerStore.currentMediaItem.attributes.name}</div>
+    ) : (
+      <div>No Selection</div>
+    )}
     <button
       onClick={
         playerStore.data.isPlaying ? playerStore.pause : playerStore.play

@@ -5,6 +5,8 @@
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
+  width: 80px;
+  margin: 0 auto;
 }
 
 .App-header {
@@ -12,6 +14,8 @@
   height: 150px;
   padding: 20px;
   color: white;
+  position: relative;
+  overflow: hidden;
 }
 
 .App-title {
@@ -23,6 +27,26 @@
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.albumArt {
+  transition: opacity 0.3s ease-in-out;
+  -webkit-filter: blur(100px);
+  -moz-filter: blur(100px);
+  -o-filter: blur(100px);
+  -ms-filter: blur(100px);
+  filter: blur(100px);
+  background-position: center;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
 }

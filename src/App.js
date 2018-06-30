@@ -5,7 +5,7 @@ import AuthorizeButton from "./components/AuthorizeButton";
 import SearchField from "./components/SearchField";
 import Player from "./components/Player";
 import PlayerStore from "./PlayerStore";
-import { Provider } from "mobx-react";
+import { Provider, observer } from "mobx-react";
 
 class App extends Component {
   constructor(props) {
@@ -24,10 +24,21 @@ class App extends Component {
   };
 
   render() {
+    let artURL =
+      PlayerStore.currentMediaItem !== null
+        ? PlayerStore.currentMediaItem.attributes.artwork.url
+        : "";
     return (
       <Provider playerStore={PlayerStore}>
-        <div>
+        <div className="App">
           <header className="App-header">
+            <div
+              className="albumArt"
+              style={{
+                backgroundImage: `url(${artURL})`,
+                opacity: PlayerStore.data.isPlaying ? 1 : 0
+              }}
+            />
             <img src={logo} className="App-logo" alt="logo" />
           </header>
           {this.state.isLoggedIn ? (
@@ -46,4 +57,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default observer(App);

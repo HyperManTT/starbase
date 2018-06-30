@@ -36,6 +36,7 @@ class PlayerStore {
 
   currentPlaybackTime = 0;
   currentPlaybackTimeRemaining = 0;
+  currentMediaItem = null;
 
   data = {
     currentPlaybackDuration: 0,
@@ -81,10 +82,18 @@ class PlayerStore {
     this.musicKit.addEventListener(Events.playbackStateDidChange, this.update);
     this.musicKit.addEventListener(Events.primaryPlayerDidChange, this.pause);
     this.musicKit.addEventListener(
+      Events.mediaItemDidChange,
+      this.updateMediaItem
+    );
+    this.musicKit.addEventListener(
       Events.playbackTimeDidChange,
       this.updateTime
     );
     this.musicKit.addEventListener(Events.playbackVolumeDidChange, this.update);
+  };
+
+  updateMediaItem = () => {
+    this.currentMediaItem = this.musicKit.player.nowPlayingItem;
   };
 
   updateTime = () => {
@@ -118,6 +127,7 @@ class PlayerStore {
 decorate(PlayerStore, {
   currentPlaybackTime: observable,
   currentPlaybackTimeRemaining: observable,
+  currentMediaItem: observable,
   musicKit: observable,
   initialized: observable,
   data: observable,
@@ -126,7 +136,8 @@ decorate(PlayerStore, {
   play: action,
   update: action,
   updateTime: action,
-  setVolume: action
+  setVolume: action,
+  updateMediaItem: action
 });
 
 export default new PlayerStore();
