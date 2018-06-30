@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=IBM+Plex+Mono:300,400");
+
 .App {
   text-align: center;
 }
@@ -10,9 +12,9 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
+  background-color: #1f1415;
+  height: 400px;
+  padding: 24px;
   color: white;
   position: relative;
   overflow: hidden;
@@ -26,15 +28,32 @@
   font-size: large;
 }
 
-@keyframes App-logo-spin {
+body {
+  color: rgb(255, 255, 255);
+  background-color: #242325;
+  font-family: "IBM Plex Mono", monospace;
+  font-weight: 300;
+}
+
+@keyframes throb {
   from {
-    transform: rotate(0deg);
+    transform: scale(1.2);
   }
   to {
-    transform: rotate(360deg);
+    transform: scale(1.1);
   }
 }
-.albumArt {
+
+@keyframes shrink {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(0);
+  }
+}
+
+.albumArtBG {
   transition: opacity 0.3s ease-in-out;
   -webkit-filter: blur(20px);
   -moz-filter: blur(20px);
@@ -49,4 +68,50 @@
   right: 0;
   bottom: 0;
   z-index: 0;
+  animation: throb 4s ease-in-out infinite alternate;
+  mix-blend-mode: difference;
+}
+
+.albumArt {
+  height: 256px;
+  width: 256px;
+  display: block;
+  background-color: rgb(226, 39, 14);
+  margin: 0 auto;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 20px 35px rgba(0, 0, 0, 0.6);
+  background-position: center;
+  background-size: cover;
+  border-radius: 100%;
+}
+
+.albumArt::after {
+  content: "";
+  display: block;
+  height: 100%;
+  width: 100%;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+  border-radius: 100%;
+  mix-blend-mode: overlay;
+}
+.albumInfo {
+  position: absolute;
+  z-index: 1;
+  margin: 0 auto;
+  bottom: -100px;
+  left: 0;
+  right: 0;
+}
+
+.title {
+  margin-top: 1em;
+  font-size: 1.4em;
+  line-height: 1.75em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.artistName {
+  font-size: 1.15em;
 }

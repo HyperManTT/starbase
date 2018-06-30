@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import AuthorizeButton from "./components/AuthorizeButton";
 import SearchField from "./components/SearchField";
@@ -15,7 +14,9 @@ class App extends Component {
     this.state = {
       isLoggedIn: window.MusicKit.getInstance().isAuthorized
     };
+    this.albumArtBGRef = React.createRef();
     this.albumArtRef = React.createRef();
+    this.albumInfoRef = React.createRef();
     autorun(() => {
       if (PlayerStore.currentMediaItem !== null) {
         this.handleArtChange(
@@ -35,12 +36,19 @@ class App extends Component {
 
   handleArtChange = artURL => {
     const img = new Image();
-    this.albumArtRef.current.style.opacity = 0;
+    this.albumArtBGRef.current.style.opacity = 0;
+    this.albumInfoRef.current.style.opacity = 0;
+    this.albumArtRef.current.style.transform = `scale(0)`;
     img.onload = () => {
       delay(() => {
+        this.albumArtBGRef.current.style.backgroundImage = `url(${artURL})`;
         this.albumArtRef.current.style.backgroundImage = `url(${artURL})`;
-        this.albumArtRef.current.style.opacity = 1;
-      }, 500);
+      }, 300);
+      delay(() => {
+        this.albumArtBGRef.current.style.opacity = 1;
+        this.albumInfoRef.current.style.opacity = 1;
+        this.albumArtRef.current.style.transform = `scale(1)`;
+      }, 650);
     };
     img.src = artURL;
   };
@@ -51,11 +59,22 @@ class App extends Component {
         <div className="App">
           <header className="App-header">
             <div
-              className="albumArt"
-              ref={this.albumArtRef}
+              className="albumArtBG"
+              ref={this.albumArtBGRef}
               style={{ opacity: 0 }}
             />
-            <img src={logo} className="App-logo" alt="logo" />
+            <div className="albumArt" ref={this.albumArtRef}>
+              {PlayerStore.currentMediaItem !== null ? (
+                <div className="albumInfo" ref={this.albumInfoRef}>
+                  <div className="title">
+                    {PlayerStore.currentMediaItem.attributes.name}
+                  </div>
+                  <div className="artist">
+                    {PlayerStore.currentMediaItem.attributes.artistName}
+                  </div>
+                </div>
+              ) : null}
+            </div>
           </header>
           {this.state.isLoggedIn ? (
             <div>

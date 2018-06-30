@@ -4,10 +4,26 @@
   line-height: 35px;
   margin-top: 10px;
   transition: background-color 0.15s linear;
+  cursor: pointer;
+}
+.SongListItem img {
+  height: 32px;
+  width: 32px;
+}
+.SongListItem span {
+  text-align: left;
+  justify-content: left;
+  max-width: 75%;
+  height: 32px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  flex: auto;
 }
 
 .SongListItem:hover {
   background-color: #efefef;
+  color: #242325;
 }
 
 .SongListItem span {
