@@ -9,7 +9,7 @@ class SearchField extends Component {
     super(props);
     this.state = { searchTerm: "", results: {} };
     this.music = window.MusicKit.getInstance();
-    this.onChangeDebounced = debounce(this.onChange, 500);
+    this.onChangeDebounced = debounce(this.onChange, 250);
   }
 
   handleChange = event => {
@@ -30,12 +30,6 @@ class SearchField extends Component {
     }
   };
 
-  selectSong = song => {
-    this.music.setQueue({ song: song.id }).then(queue => {
-      this.props.playerStore.play();
-    });
-  };
-
   render() {
     return (
       <div className="SearchField">
@@ -44,20 +38,9 @@ class SearchField extends Component {
           <div>
             <h2>Songs</h2>
             <ul className="Results">
-              {this.state.results.songs.data.map(songData => {
-                let imageURL = window.MusicKit.formatArtworkURL(
-                  songData.attributes.artwork,
-                  16
-                );
-                return (
-                  <SongListItem
-                    key={songData.id}
-                    songData={songData}
-                    imageURL={imageURL}
-                    onSelect={this.selectSong}
-                  />
-                );
-              })}
+              {this.state.results.songs.data.map(mediaItem => (
+                <SongListItem key={mediaItem.id} mediaItem={mediaItem} />
+              ))}
             </ul>
           </div>
         ) : (

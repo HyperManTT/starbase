@@ -1,5 +1,14 @@
 import React from "react";
 import { observer, inject } from "mobx-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faPlay,
+  faPause,
+  faForward,
+  faBackward
+} from "@fortawesome/free-solid-svg-icons";
+
+import "./Player.css";
 
 const PlayerTime = inject("playerStore")(
   observer(({ playerStore }) => <div>{playerStore.timeString}</div>)
@@ -13,13 +22,13 @@ const Player = ({ playerStore }) => (
     ) : (
       <div>No Selection</div>
     )}
-    <button
-      onClick={
-        playerStore.data.isPlaying ? playerStore.pause : playerStore.play
+    <FontAwesomeIcon
+      icon={playerStore.isPlaying ? faPause : faPlay}
+      onClick={() =>
+        playerStore.isPlaying ? playerStore.pause() : playerStore.play()
       }
-    >
-      {playerStore.data.isPlaying ? `Pause` : `Play`}
-    </button>
+    />
+    <FontAwesomeIcon icon={faForward} onClick={playerStore.next} />
     <input
       type="range"
       id="volume"

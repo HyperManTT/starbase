@@ -1,4 +1,4 @@
-.SongListItem {
+.ListItem {
   display: flex;
   flex-direction: row;
   line-height: 35px;
@@ -8,11 +8,11 @@
   border-bottom: 1px solid #191919;
 }
 
-.SongListItem img {
+.ListItem img {
   height: 32px;
   width: 32px;
 }
-.SongListItem span {
+.ListItem span {
   text-align: left;
   justify-content: left;
   max-width: 75%;
@@ -23,16 +23,16 @@
   flex: auto;
 }
 
-.SongListItem:hover {
+.ListItem:hover {
   background-color: #efefef;
   color: #242325;
 }
 
-.SongListItem span {
+.ListItem span {
   margin-left: 10px;
 }
 
-.SongListItem svg {
+.ListItem svg {
   cursor: pointer;
   display: block;
   height: 2em;

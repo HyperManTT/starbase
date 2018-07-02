@@ -37,13 +37,15 @@ class PlayerStore {
   currentPlaybackTime = 0;
   currentPlaybackTimeRemaining = 0;
   currentMediaItem = null;
+  isPlaying = false;
 
   data = {
     currentPlaybackDuration: 0,
     currentVolume: 1,
-    isPlaying: false,
     audioNode: null
   };
+
+  items = [];
 
   get timeString() {
     let pad = function(num) {
@@ -75,20 +77,30 @@ class PlayerStore {
       developerToken:
         "eyJhbGciOiJFUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjVONzQ5NEhGNDcifQ.eyJpYXQiOjE1Mjk2OTUwMTgsImV4cCI6MTU0NTI0NzAxOCwiaXNzIjoiMlVKNUY0TVU1VSJ9.5xv6wLb7VeHt5wttDu7AFhSiqE8849rjMvdlvaKO00qzmzGwkxJJ5rovsCBKZ8ZFV02VKnpLcXTQIe0sQjKilw",
       app: {
-        name: "Starbase.tokyo",
+        name: "starbase.tokyo",
         build: "1983.10.14"
       }
     });
-    this.musicKit.addEventListener(Events.playbackStateDidChange, this.update);
+
+    this.musicKit.addEventListener(
+      Events.playbackStateDidChange,
+      action(() => {
+        this.isPlaying = this.musicKit.player.isPlaying;
+      })
+    );
+
     this.musicKit.addEventListener(Events.primaryPlayerDidChange, this.pause);
+
     this.musicKit.addEventListener(
       Events.mediaItemDidChange,
       this.updateMediaItem
     );
+
     this.musicKit.addEventListener(
       Events.playbackTimeDidChange,
       this.updateTime
     );
+
     this.musicKit.addEventListener(Events.playbackVolumeDidChange, this.update);
   };
 
@@ -105,7 +117,6 @@ class PlayerStore {
     this.data = {
       currentPlaybackDuration: this.musicKit.player.currentPlaybackDuration,
       currentPlaybackVolume: this.musicKit.player.currentPlaybackVolume,
-      isPlaying: this.musicKit.player.isPlaying,
       audioNode: this.musicKit._player
     };
   };
@@ -114,13 +125,34 @@ class PlayerStore {
     this.musicKit.pause();
   };
 
-  play = () => {
-    this.musicKit.play();
-  };
-
   setVolume = value => {
     const volumeValue = value < 0 ? 0 : value > 1 ? 1 : value;
     this.musicKit._player.volume = volumeValue;
+  };
+
+  remove = mediaItem => {
+    const index = this.queue.items.indexOf(mediaItem);
+    if (index !== -1) {
+      this.queue.items.splice(index, 1);
+    }
+  };
+
+  play = mediaItem => {
+    if (mediaItem !== undefined) {
+      this.musicKit.setQueue({ song: mediaItem.id }).then(queue => {
+        this.musicKit.play();
+      });
+    } else {
+      this.musicKit.play();
+    }
+  };
+
+  next = () => {
+    this.play(this.items.shift());
+  };
+
+  add = mediaItem => {
+    this.items.push(mediaItem);
   };
 }
 
@@ -128,6 +160,8 @@ decorate(PlayerStore, {
   currentPlaybackTime: observable,
   currentPlaybackTimeRemaining: observable,
   currentMediaItem: observable,
+  isPlaying: observable,
+  items: observable,
   musicKit: observable,
   initialized: observable,
   data: observable,
@@ -137,7 +171,11 @@ decorate(PlayerStore, {
   update: action,
   updateTime: action,
   setVolume: action,
-  updateMediaItem: action
+  updateMediaItem: action,
+  remove: action,
+  add: action,
+  next: action,
+  previous: action
 });
 
 export default new PlayerStore();

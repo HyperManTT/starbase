@@ -5,34 +5,27 @@ import "./SongListItem.css";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faPlayCircle,
-  faShareSquare,
-  faPlus
-} from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faShareSquare } from "@fortawesome/free-solid-svg-icons";
 
-const SongListItem = ({ playerStore, mediaItem }) => (
+const QueueItem = ({ playerStore, mediaItem, disabled }) => (
   <li className="ListItem">
     <img
       alt={`${mediaItem.attributes.name} art`}
       src={window.MusicKit.formatArtworkURL(mediaItem.attributes.artwork, 32)}
-      onClick={() => playerStore.play(mediaItem)}
     />
-    <span onClick={() => playerStore.play(mediaItem)}>
+    <span>
       {mediaItem.attributes.name} - {mediaItem.attributes.artistName}
     </span>
-    <FontAwesomeIcon
-      icon={faPlayCircle}
-      onClick={() => playerStore.play(mediaItem)}
-    />
-    <FontAwesomeIcon
-      icon={faPlus}
-      onClick={() => playerStore.queue.append(mediaItem)}
-    />
+    {disabled === false ? (
+      <FontAwesomeIcon
+        icon={faMinus}
+        onClick={() => playerStore.remove(mediaItem)}
+      />
+    ) : null}
     <CopyToClipboard text={mediaItem.attributes.url}>
       <FontAwesomeIcon icon={faShareSquare} />
     </CopyToClipboard>
   </li>
 );
 
-export default inject("playerStore")(observer(SongListItem));
+export default inject("playerStore")(observer(QueueItem));

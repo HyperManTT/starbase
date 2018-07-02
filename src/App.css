@@ -13,7 +13,7 @@
 
 .App-header {
   background-color: #1f1415;
-  height: 400px;
+  height: 33vmin;
   padding: 24px;
   color: white;
   position: relative;
@@ -73,8 +73,8 @@ body {
 }
 
 .albumArt {
-  height: 256px;
-  width: 256px;
+  height: 25vmin;
+  width: 25vmin;
   display: block;
   background-color: rgb(226, 39, 14);
   margin: 0 auto;
@@ -83,6 +83,15 @@ body {
   background-position: center;
   background-size: cover;
   border-radius: 100%;
+}
+
+@keyframes throb-small {
+  from {
+    transform: scale(0.15);
+  }
+  to {
+    transform: scale(0.7);
+  }
 }
 
 .albumArt::after {
@@ -95,18 +104,21 @@ body {
   border-radius: 100%;
   mix-blend-mode: overlay;
 }
+
 .albumInfo {
   position: absolute;
   z-index: 1;
   margin: 0 auto;
-  bottom: -100px;
+  bottom: -8vmin;
   left: 0;
   right: 0;
+  text-shadow: 0 3px 5px rgba(0, 0, 0, 0.8);
 }
 
 .title {
   margin-top: 1em;
   font-size: 1.4em;
+  font-weight: 400;
   line-height: 1.75em;
   overflow: hidden;
   text-overflow: ellipsis;

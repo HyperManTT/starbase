@@ -7,6 +7,7 @@ import PlayerStore from "./PlayerStore";
 import { autorun } from "mobx";
 import { Provider, observer } from "mobx-react";
 import { delay } from "lodash";
+import QueueItem from "./components/QueueItem";
 
 class App extends Component {
   constructor(props) {
@@ -17,6 +18,7 @@ class App extends Component {
     this.albumArtBGRef = React.createRef();
     this.albumArtRef = React.createRef();
     this.albumInfoRef = React.createRef();
+
     autorun(() => {
       if (PlayerStore.currentMediaItem !== null) {
         this.handleArtChange(
@@ -83,6 +85,22 @@ class App extends Component {
               <div>Signed In.</div>
               <button onClick={this.signOff}>Sign Off</button>
               <Player />
+              <div>
+                <h3>Queue</h3>
+                {PlayerStore.items.length === 0 ? (
+                  <div>Empty Queue</div>
+                ) : (
+                  <ul className="Results">
+                    {PlayerStore.items.map(mediaItem => (
+                      <QueueItem
+                        key={mediaItem.id}
+                        mediaItem={mediaItem}
+                        disabled={PlayerStore.currentMediaItem === mediaItem}
+                      />
+                    ))}
+                  </ul>
+                )}
+              </div>
               <SearchField />
             </div>
           ) : (
