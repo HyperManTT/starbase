@@ -9,3 +9,11 @@
 .playerDiv {
   padding: 20px;
 }
+
+.progressIndicator {
+  display: inline-block;
+}
+
+.playerControls {
+  margin-top: 20px;
+}

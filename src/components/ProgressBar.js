@@ -85,6 +85,7 @@ export const ProgressBar = ({
       height: direction === Direction.HORIZONTAL ? 8 : 130,
       borderRadius: 4,
       background: WHITE_SMOKE,
+      margin: "0px 20px",
       transition:
         direction === Direction.HORIZONTAL ? "width 0.1s" : "height 0.1s",
       cursor: isEnabled === true ? "pointer" : "default"

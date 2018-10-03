@@ -10,6 +10,11 @@ class SearchField extends Component {
     this.state = { searchTerm: "", results: {} };
     this.music = window.MusicKit.getInstance();
     this.onChangeDebounced = debounce(this.onChange, 250);
+
+    let styles = {
+      background: "white",
+      color: "white"
+    };
   }
 
   handleChange = event => {
@@ -44,7 +49,7 @@ class SearchField extends Component {
             </ul>
           </div>
         ) : (
-          <div>No Songs</div>
+          <div style={{ margin: "20px" }} />
         )}
       </div>
     );

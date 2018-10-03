@@ -40,7 +40,7 @@ class App extends Component {
   handleArtChange = artURL => {
     const img = new Image();
     this.albumArtBGRef.current.style.opacity = 0;
-    this.albumInfoRef.current.style.opacity = 0;
+    // this.albumInfoRef.current.style.opacity = 0;
     this.albumArtRef.current.style.transform = `scale(0)`;
     img.onload = () => {
       delay(() => {
@@ -49,7 +49,7 @@ class App extends Component {
       }, 300);
       delay(() => {
         this.albumArtBGRef.current.style.opacity = 1;
-        this.albumInfoRef.current.style.opacity = 1;
+        // this.albumInfoRef.current.style.opacity = 1;
         this.albumArtRef.current.style.transform = `scale(1)`;
       }, 650);
     };
@@ -67,18 +67,19 @@ class App extends Component {
               style={{ opacity: 0 }}
             />
             <div className="albumArt" ref={this.albumArtRef}>
-              <div className="albumInfo" ref={this.albumInfoRef}>
+              {/* <div className="albumInfo" ref={this.albumInfoRef}>
                 {PlayerStore.currentMediaItem !== null ? (
                   <div>
                     <div className="title">
                       {PlayerStore.currentMediaItem.attributes.name}
+                      {console.log(PlayerStore.currentMediaItem.attributes)}
                     </div>
                     <div className="artist">
                       {PlayerStore.currentMediaItem.attributes.artistName}
                     </div>
                   </div>
                 ) : null}
-              </div>
+              </div> */}
             </div>
           </header>
           {this.state.isLoggedIn ? (
@@ -89,30 +90,35 @@ class App extends Component {
                   color="secondary"
                   onClick={this.signOff}
                 >
-                  Sign Out Of Apple Music
+                  <div className="signOutButton">Sign Out Of Apple Music</div>
                 </Button>
               </div>
-
-              <Player />
-              <div>
-                <h3>Queue</h3>
-                {PlayerStore.items.length === 0 ? (
-                  <div>Empty Queue</div>
-                ) : (
-                  <div>
-                    <ul className="Results">
-                      {PlayerStore.items.map(mediaItem => (
-                        <QueueItem
-                          key={mediaItem.id}
-                          mediaItem={mediaItem}
-                          disabled={PlayerStore.currentMediaItem === mediaItem}
-                        />
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                <SearchField />
-              </div>
+              {PlayerStore.currentMediaItem !== null ? (
+                <div>
+                  <Player />
+                  <h3>Queue</h3>
+                  {PlayerStore.items.length === 0 ? (
+                    <div>Empty Queue</div>
+                  ) : (
+                    <div>
+                      <ul className="Results">
+                        {PlayerStore.items.map(mediaItem => (
+                          <QueueItem
+                            key={mediaItem.id}
+                            mediaItem={mediaItem}
+                            disabled={
+                              PlayerStore.currentMediaItem === mediaItem
+                            }
+                          />
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                ""
+              )}
+              <SearchField />
             </div>
           ) : (
             <div className="authButton">

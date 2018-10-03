@@ -31,7 +31,7 @@
 body {
   color: rgb(255, 255, 255);
   background-color: #242325;
-  font-family: "IBM Plex Mono", monospace;
+  font-family: "Montserrat", sans-serif;
   font-weight: 300;
 }
 
@@ -73,8 +73,8 @@ body {
 }
 
 .albumArt {
-  height: 25vmin;
-  width: 25vmin;
+  height: 35vmin;
+  width: 35vmin;
   display: block;
   background-color: rgb(226, 39, 14);
   margin: 0 auto;
@@ -131,4 +131,8 @@ body {
 .authButton {
   padding-top: 10px;
   padding-bottom: 20px;
+}
+
+.signOutButton {
+  text-transform: none;
 }

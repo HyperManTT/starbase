@@ -64,6 +64,31 @@ class PlayerStore {
     )} : -${remainingTime.minutes()}:${pad(remainingTime.seconds())}`;
   }
 
+  getFormattedTimeElapsed() {
+    let pad = function(num) {
+      if (num < 10) {
+        num = "0" + num;
+      }
+      return num;
+    };
+    let currentTime = moment.duration(this.currentPlaybackTime, "seconds");
+    return `${currentTime.minutes()}:${pad(currentTime.seconds())}`;
+  }
+
+  getFormattedTimeRemaining() {
+    let pad = function(num) {
+      if (num < 10) {
+        num = "0" + num;
+      }
+      return num;
+    };
+    let remainingTime = moment.duration(
+      this.currentPlaybackTimeRemaining,
+      "seconds"
+    );
+    return `${remainingTime.minutes()}:${pad(remainingTime.seconds())}`;
+  }
+
   getTimeElapsed() {
     return this.currentPlaybackTime;
   }
@@ -73,6 +98,10 @@ class PlayerStore {
       this.currentPlaybackTime + this.currentPlaybackTimeRemaining;
     // console.log("Calc: " + this.currentPlaybackTime + "/" + totalTime )
     return totalTime;
+  }
+
+  getTimeRemaining() {
+    return this.currentPlaybackTimeRemaining;
   }
 
   constructor() {
@@ -159,7 +188,11 @@ class PlayerStore {
   };
 
   next = () => {
-    this.play(this.items.shift());
+    if (this.items.length === 0) {
+      alert("No queued songs");
+    } else {
+      this.play(this.items.shift());
+    }
   };
 
   add = mediaItem => {

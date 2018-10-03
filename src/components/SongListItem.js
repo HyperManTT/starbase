@@ -32,9 +32,9 @@ const SongListItem = ({ playerStore, mediaItem }) => (
         playerStore.add(mediaItem);
       }}
     />
-    <CopyToClipboard text={mediaItem.attributes.url}>
+    {/* <CopyToClipboard text={mediaItem.attributes.url}>
       <FontAwesomeIcon icon={faShareSquare} />
-    </CopyToClipboard>
+    </CopyToClipboard> */}
   </li>
 );
 
