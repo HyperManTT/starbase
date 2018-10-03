@@ -43,8 +43,11 @@ class SearchField extends Component {
           <div>
             <h2>Songs</h2>
             <ul className="Results">
-              {this.state.results.songs.data.map(mediaItem => (
-                <SongListItem key={mediaItem.id} mediaItem={mediaItem} />
+              {this.state.results.songs.data.map((mediaItem, index) => (
+                <SongListItem
+                  key={mediaItem.id + index}
+                  mediaItem={mediaItem}
+                />
               ))}
             </ul>
           </div>

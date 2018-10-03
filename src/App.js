@@ -96,11 +96,11 @@ class App extends Component {
               {PlayerStore.currentMediaItem !== null ? (
                 <div>
                   <Player />
-                  <h3>Queue</h3>
                   {PlayerStore.items.length === 0 ? (
-                    <div>Empty Queue</div>
+                    "" // <div>Empty Queue</div>
                   ) : (
                     <div>
+                      <h3>Queue</h3>
                       <ul className="Results">
                         {PlayerStore.items.map(mediaItem => (
                           <QueueItem

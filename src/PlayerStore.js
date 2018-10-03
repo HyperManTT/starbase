@@ -86,6 +86,12 @@ class PlayerStore {
       this.currentPlaybackTimeRemaining,
       "seconds"
     );
+    // if(this.currentPlaybackTimeRemaining === 0 && this.items.length > 0){
+    //   this.next();
+    // }
+    // else {
+    //   return `${remainingTime.minutes()}:${pad(remainingTime.seconds())}`;
+    // }
     return `${remainingTime.minutes()}:${pad(remainingTime.seconds())}`;
   }
 
@@ -142,6 +148,10 @@ class PlayerStore {
     );
 
     this.musicKit.addEventListener(Events.playbackVolumeDidChange, this.update);
+
+    this.musicKit.addEventListener(Events.playbackTimeDidChange, () =>
+      console.log(this.currentPlaybackTimeRemaining)
+    );
   };
 
   updateMediaItem = () => {
