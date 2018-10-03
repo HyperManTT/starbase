@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
 
 const auth = authStateChanged => {
   window.MusicKit.getInstance()
@@ -7,7 +8,15 @@ const auth = authStateChanged => {
 };
 
 const AuthorizeButton = ({ authStateChanged }) => {
-  return <button onClick={() => auth(authStateChanged)}>Authorize</button>;
+  return (
+    <Button
+      variant="contained"
+      color="secondary"
+      onClick={() => auth(authStateChanged)}
+    >
+      Sign In to Apple Music
+    </Button>
+  );
 };
 
 export default AuthorizeButton;

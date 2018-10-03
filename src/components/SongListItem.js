@@ -27,7 +27,10 @@ const SongListItem = ({ playerStore, mediaItem }) => (
     />
     <FontAwesomeIcon
       icon={faPlus}
-      onClick={() => playerStore.queue.append(mediaItem)}
+      onClick={() => {
+        console.log(playerStore.add);
+        playerStore.add(mediaItem);
+      }}
     />
     <CopyToClipboard text={mediaItem.attributes.url}>
       <FontAwesomeIcon icon={faShareSquare} />

@@ -8,6 +8,7 @@ import { autorun } from "mobx";
 import { Provider, observer } from "mobx-react";
 import { delay } from "lodash";
 import QueueItem from "./components/QueueItem";
+import Button from "@material-ui/core/Button";
 
 class App extends Component {
   constructor(props) {
@@ -82,29 +83,41 @@ class App extends Component {
           </header>
           {this.state.isLoggedIn ? (
             <div>
-              <div>Signed In.</div>
-              <button onClick={this.signOff}>Sign Off</button>
+              <div className="authButton">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={this.signOff}
+                >
+                  Sign Out Of Apple Music
+                </Button>
+              </div>
+
               <Player />
               <div>
                 <h3>Queue</h3>
                 {PlayerStore.items.length === 0 ? (
                   <div>Empty Queue</div>
                 ) : (
-                  <ul className="Results">
-                    {PlayerStore.items.map(mediaItem => (
-                      <QueueItem
-                        key={mediaItem.id}
-                        mediaItem={mediaItem}
-                        disabled={PlayerStore.currentMediaItem === mediaItem}
-                      />
-                    ))}
-                  </ul>
+                  <div>
+                    <ul className="Results">
+                      {PlayerStore.items.map(mediaItem => (
+                        <QueueItem
+                          key={mediaItem.id}
+                          mediaItem={mediaItem}
+                          disabled={PlayerStore.currentMediaItem === mediaItem}
+                        />
+                      ))}
+                    </ul>
+                  </div>
                 )}
+                <SearchField />
               </div>
-              <SearchField />
             </div>
           ) : (
-            <AuthorizeButton authStateChanged={this.authStateChanged} />
+            <div className="authButton">
+              <AuthorizeButton authStateChanged={this.authStateChanged} />
+            </div>
           )}
         </div>
       </Provider>

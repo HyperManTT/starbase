@@ -127,3 +127,8 @@ body {
 .artistName {
   font-size: 1.15em;
 }
+
+.authButton {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}

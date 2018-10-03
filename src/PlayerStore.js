@@ -64,6 +64,17 @@ class PlayerStore {
     )} : -${remainingTime.minutes()}:${pad(remainingTime.seconds())}`;
   }
 
+  getTimeElapsed() {
+    return this.currentPlaybackTime;
+  }
+
+  getCurrentPlaybackDuration() {
+    let totalTime =
+      this.currentPlaybackTime + this.currentPlaybackTimeRemaining;
+    // console.log("Calc: " + this.currentPlaybackTime + "/" + totalTime )
+    return totalTime;
+  }
+
   constructor() {
     if (window.MusicKit !== undefined) {
       this.setup();
@@ -131,9 +142,9 @@ class PlayerStore {
   };
 
   remove = mediaItem => {
-    const index = this.queue.items.indexOf(mediaItem);
+    const index = this.items.indexOf(mediaItem);
     if (index !== -1) {
-      this.queue.items.splice(index, 1);
+      this.items.splice(index, 1);
     }
   };
 
@@ -153,6 +164,10 @@ class PlayerStore {
 
   add = mediaItem => {
     this.items.push(mediaItem);
+  };
+
+  seek = value => {
+    this.musicKit.seekToTime(value);
   };
 }
 
@@ -175,7 +190,8 @@ decorate(PlayerStore, {
   remove: action,
   add: action,
   next: action,
-  previous: action
+  previous: action,
+  seek: action
 });
 
 export default new PlayerStore();
