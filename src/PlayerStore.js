@@ -148,10 +148,6 @@ class PlayerStore {
     );
 
     this.musicKit.addEventListener(Events.playbackVolumeDidChange, this.update);
-
-    this.musicKit.addEventListener(Events.playbackTimeDidChange, () =>
-      console.log(this.currentPlaybackTimeRemaining)
-    );
   };
 
   updateMediaItem = () => {
@@ -207,6 +203,7 @@ class PlayerStore {
 
   add = mediaItem => {
     this.items.push(mediaItem);
+    console.log(mediaItem);
   };
 
   seek = value => {
@@ -238,3 +235,10 @@ decorate(PlayerStore, {
 });
 
 export default new PlayerStore();
+
+// let music = window.MusicKit.getInstance()
+// let res = []
+// music.api.library.songs().then(function(songs){res.push(songs)})
+// music.setQueue(res[0][0]).then(function(){
+//   music.play()
+// })
